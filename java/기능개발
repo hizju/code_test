@@ -1,0 +1,28 @@
+import java.util.*;
+
+class Solution{
+    public int[] solution(int[] progresses , int[] speeds){
+        Queue<Integer> queue = new LinkedList<>();
+
+        for(int i = 0; i<progresses.length; i++){
+            int days = (int) Math.ceil( (100.0 - progresses[i]) / speeds[i]); // 배포날짜
+            queue.offer(days); // 계산된 배포날짜를 큐에 집어넣기.
+        }
+
+        List<Integer> releaseFunction = new ArrayList<>(); // 배포된 기능의 갯수를 저장할 List 배열.
+        while(!queue.isEmpty()){ // 큐에 값이 있을 때까지
+            int releaseDay = queue.poll(); // 큐에서 배포날짜 꺼내기.
+            int releaseFunctionCount = 1; // 배포된 기능의 갯수
+
+            while(!queue.isEmpty() && queue.peek() <= releaseDay){
+                /* 큐에 값이 있으면서 배포날짜와 같거나 작은 것이 있으면 꺼내고
+                    배포된 기능 갯수 더하기.
+                 */
+                queue.poll();
+                releaseFunctionCount++;
+            }
+            releaseFunction.add(releaseFunctionCount);
+        }
+        return releaseFunction.stream().mapToInt(a -> a).toArray();
+    }
+}
