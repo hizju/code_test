@@ -1,0 +1,19 @@
+import java.util.*;
+
+class Solution {
+    
+    public int solution(int[] nums) {
+        Map<Integer, Integer> ponkets = new HashMap<>(); // 숫자 매핑
+        for (int num: nums) { // 각 숫자끼리 반복문
+            ponkets.put(num, ponkets.getOrDefault(num, 0) + 1); // 하나씩 증가
+        }
+        
+        int halfN = nums.length / 2; 
+        // 2로 나눴을때
+        if (halfN <= ponkets.size()) { // 사이즈보다 같거나 작으면
+            return halfN; // 반환
+        } else {
+            return ponkets.size();
+        }
+    }
+}
